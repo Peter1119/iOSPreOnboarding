@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		35EB3BD229FA82000022D921 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB3BD129FA82000022D921 /* main.swift */; };
-		35EB3BD929FB5BDB0022D921 /* Studeont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB3BD829FB5BDB0022D921 /* Studeont.swift */; };
+		35EB3BD929FB5BDB0022D921 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB3BD829FB5BDB0022D921 /* Student.swift */; };
 		35EB3BDB29FB5C420022D921 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB3BDA29FB5C420022D921 /* Subject.swift */; };
+		35EB3BDD29FCDDA10022D921 /* StudentCreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB3BDC29FCDDA10022D921 /* StudentCreditManager.swift */; };
+		35EB3BDF29FCE38E0022D921 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EB3BDE29FCE38E0022D921 /* Error.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +29,10 @@
 /* Begin PBXFileReference section */
 		35EB3BCE29FA82000022D921 /* MyCreditManager */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MyCreditManager; sourceTree = BUILT_PRODUCTS_DIR; };
 		35EB3BD129FA82000022D921 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		35EB3BD829FB5BDB0022D921 /* Studeont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Studeont.swift; sourceTree = "<group>"; };
+		35EB3BD829FB5BDB0022D921 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		35EB3BDA29FB5C420022D921 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		35EB3BDC29FCDDA10022D921 /* StudentCreditManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentCreditManager.swift; sourceTree = "<group>"; };
+		35EB3BDE29FCE38E0022D921 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				35EB3BD129FA82000022D921 /* main.swift */,
-				35EB3BD829FB5BDB0022D921 /* Studeont.swift */,
+				35EB3BDC29FCDDA10022D921 /* StudentCreditManager.swift */,
+				35EB3BD829FB5BDB0022D921 /* Student.swift */,
 				35EB3BDA29FB5C420022D921 /* Subject.swift */,
+				35EB3BDE29FCE38E0022D921 /* Error.swift */,
 			);
 			path = MyCreditManager;
 			sourceTree = "<group>";
@@ -128,7 +134,9 @@
 			files = (
 				35EB3BD229FA82000022D921 /* main.swift in Sources */,
 				35EB3BDB29FB5C420022D921 /* Subject.swift in Sources */,
-				35EB3BD929FB5BDB0022D921 /* Studeont.swift in Sources */,
+				35EB3BDD29FCDDA10022D921 /* StudentCreditManager.swift in Sources */,
+				35EB3BDF29FCE38E0022D921 /* Error.swift in Sources */,
+				35EB3BD929FB5BDB0022D921 /* Student.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
