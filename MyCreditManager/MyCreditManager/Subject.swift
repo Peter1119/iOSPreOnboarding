@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Subject {
+struct Subject: Equatable {
     let name: String
     var score: Double
     
@@ -29,5 +29,9 @@ struct Subject {
         case "F": return 0.0
         default: return nil
         }
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.name == rhs.name
     }
 }
