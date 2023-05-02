@@ -59,6 +59,19 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         
     }
     
+    func removeGrade(_ info: String) throws {
+        let data: [String] = info.split(separator: " ").map { String($0) }
+        guard data.count == 2,
+              let name = data.first,
+              students.map(\.name).contains(name),
+              let creditString = data.last
+        else { throw InputError.invalidInput }
+        
+        guard let studentIndex = students.map(\.name).firstIndex(of: name),
+              let subjectIndex = students[studentIndex].subjects.map(\.name).firstIndex(of: creditString)
+        else { throw InputError.invalidInput }
+        
+        students[studentIndex].subjects.remove(at: subjectIndex)
     }
     
     func getAverageCredit(_ name: String) throws {
@@ -70,4 +83,5 @@ class StudentCreditManager: StudentCreditManagerProtocol {
             throw InputError.wrongValue
         }
     }
+
 }
