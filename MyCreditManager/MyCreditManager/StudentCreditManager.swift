@@ -10,8 +10,8 @@ import Foundation
 protocol StudentCreditManagerProtocol {
     func addStudent(_ name: String) throws
     func removeStudent(_ name: String) throws
-    func addGrade(_ name: String, subject: Subject) throws
-    func removeGrade(_ name: String, subject: Subject) throws
+    func addGrade(_ info: String) throws
+    func removeGrade(_ info: String) throws
     func getAverageCredit(_ name: String) throws
 }
 
@@ -37,23 +37,28 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         }
     }
     
-    func addGrade(_ name: String, subject: Subject) throws {
-        try validateName(name)
+    func addGrade(_ info: String) throws {
+        let data: [String] = info.split(separator: " ").map { String($0) }
+        guard data.count == 3,
+              let name = data.first,
+              students.map(\.name).contains(name),
+              let creditString = data.last,
+              let credit = Subject.changeCreditToScore(credit: creditString)
+        else { throw InputError.invalidInput }
         
-        let student = students.first { $0.name == name }
+        let subjectName = data[1]
+        let subject = Subject(name: subjectName, score: credit)
         
-        guard let student else {
-            throw InputError.invalidStudentName
-        }
+        guard
+            let studentIndex = students.map(\.name).firstIndex(of: name),
+            let subjectIndex = students[studentIndex]
+            .subjects.map(\.name)
+            .firstIndex(of: subjectName) else { throw InputError.invalidInput }
         
-        if student.subjects.map(\.name).contains(subject.name) {
-            
-        }
-
+        students[studentIndex].subjects[subjectIndex] = subject
+        
     }
     
-    func removeGrade(_ name: String, subject: Subject) throws {
-        try validateName(name)
     }
     
     func getAverageCredit(_ name: String) throws {
