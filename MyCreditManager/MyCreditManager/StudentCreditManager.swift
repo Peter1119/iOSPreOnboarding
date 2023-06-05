@@ -16,6 +16,8 @@ protocol StudentCreditManagerProtocol {
 }
 
 class StudentCreditManager: StudentCreditManagerProtocol {
+    private var students: [Student] = []
+    
     func addStudent(_ name: String) {
         
     }
@@ -34,5 +36,10 @@ class StudentCreditManager: StudentCreditManagerProtocol {
     
     func getAverageCredit(_ name: String) {
         
+    }
+    
+    // for Test
+    func getStudents() -> [Student] {
+        return students
     }
 }

@@ -21,4 +21,12 @@ final class MyCreditManagerTests: XCTestCase {
         try super.tearDownWithError()
         sut = nil
     }
+
+    func test_Mike이름을넣으면Mike학생이생성됨() {
+        // given
+        
+        // when
+        
+        // then
+    }
 }
