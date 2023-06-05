@@ -28,12 +28,12 @@ class StudentCreditManager: StudentCreditManagerProtocol {
     func removeStudent(_ name: String) throws {
         try validateName(name)
         
-        if students.map(\.name).contains(name) {
-            students.removeAll {
-                $0.name == name
-            }
-        } else {
+        guard students.map(\.name).contains(name) else {
             throw InputError.existingStudent
+        }
+        
+        students.removeAll {
+            $0.name == name
         }
     }
     
@@ -52,11 +52,10 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         guard
             let studentIndex = students.map(\.name).firstIndex(of: name),
             let subjectIndex = students[studentIndex]
-            .subjects.map(\.name)
-            .firstIndex(of: subjectName) else { throw InputError.invalidInput }
+                .subjects.map(\.name)
+                .firstIndex(of: subjectName) else { throw InputError.invalidInput }
         
         students[studentIndex].subjects[subjectIndex] = subject
-        
     }
     
     func removeGrade(_ info: String) throws {
@@ -83,5 +82,5 @@ class StudentCreditManager: StudentCreditManagerProtocol {
             throw InputError.wrongValue
         }
     }
-
+    
 }
