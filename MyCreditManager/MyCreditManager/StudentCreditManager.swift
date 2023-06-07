@@ -9,7 +9,7 @@ import Foundation
 
 protocol StudentCreditManagerProtocol {
     func addStudent(_ name: String) throws
-    func removeStudent(_ name: String)
+    func removeStudent(_ name: String) throws
     func addGrade(_ info: String)
     func removeGrade(_ info: String)
     func getAverageCredit(_ name: String)
@@ -30,8 +30,14 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         students.append(newStudent)
     }
     
-    func removeStudent(_ name: String) {
-        
+    func removeStudent(_ name: String) throws {
+        guard name.isEmpty == false else {
+            throw InputError.emptyString
+        }
+        guard students.map(\.name).contains(name) == true else {
+            throw InputError.notExistingStudent(name: name)
+        }
+        students.removeAll { $0.name == name }
     }
     
     func addGrade(_ info: String) {
