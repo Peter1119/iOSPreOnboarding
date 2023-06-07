@@ -8,7 +8,7 @@
 import Foundation
 
 protocol StudentCreditManagerProtocol {
-    func addStudent(_ name: String)
+    func addStudent(_ name: String) throws
     func removeStudent(_ name: String)
     func addGrade(_ info: String)
     func removeGrade(_ info: String)
@@ -18,8 +18,16 @@ protocol StudentCreditManagerProtocol {
 class StudentCreditManager: StudentCreditManagerProtocol {
     private var students: [Student] = []
     
-    func addStudent(_ name: String) {
+    func addStudent(_ name: String) throws {
+        guard name.isEmpty == false else {
+            throw InputError.emptyString
+        }
+        guard students.map(\.name).contains(name) == false else {
+            throw InputError.alreadyHaveStudent(name: name)
+        }
         
+        let newStudent = Student(name: name)
+        students.append(newStudent)
     }
     
     func removeStudent(_ name: String) {
