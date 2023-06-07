@@ -11,6 +11,7 @@ enum InputError: Error, CustomDebugStringConvertible, Equatable {
     case alreadyHaveStudent(name: String)
     case emptyString
     case notExistingStudent(name: String)
+    case wrongInfoInput
     
     var debugDescription: String {
         switch self {
@@ -20,6 +21,8 @@ enum InputError: Error, CustomDebugStringConvertible, Equatable {
             return "이름을 입력하지 않으셨습니다. 추가하지 않습니다."
         case .notExistingStudent(name: let name):
             return "\(name) 학생을 찾지 못했습니다."
+        case .wrongInfoInput:
+            return "입력이 잘못되었습니다. 다시 확인해주세요."
         }
     }
 }

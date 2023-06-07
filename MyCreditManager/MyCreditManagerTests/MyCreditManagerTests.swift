@@ -126,6 +126,70 @@ final class MyCreditManagerTests: XCTestCase {
         }
     }
     
+    // MARK: - 성적 입력 방식 Validation TEST
+    func test_info가띄어쓰기없이empty정보를입력하면에러를방출함() {
+        // given
+        let info = String()
+        
+        // when
+        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+    
+    func test_info가띄어쓰기없이1가지정보를입력하면에러를방출함() {
+        // given
+        let info = "Mike"
+        
+        // when
+        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+    
+    func test_info가띄어쓰기없이2가지정보를입력하면에러를방출함() {
+        // given
+        let info = "Mike Swift"
+        
+        // when
+        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+    
+    func test_info가띄어쓰기없이3가지정보를입력하면true를방출함() {
+        // given
+        let info = "Mike Swift A+"
+        
+        // when
+        do {
+            let result = try sut.validateSubjectInfoForm(info)
+            
+            // then
+            XCTAssertEqual(result, true)
+        } catch {
+            XCTFail("예상 밖의 오류 발생: \(error)")
+        }
+    }
+    
+    func test_성적형태가올바르지않으면에러방출() {
+        // given
+        let info = "Mike Swift R+"
+        
+        // when
+        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+    
     // MARK: - 성적 추가 TEST
     
 }

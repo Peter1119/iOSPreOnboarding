@@ -52,6 +52,23 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         
     }
     
+    func validateSubjectInfoForm(_ info: String) throws -> Bool {
+        guard info.isEmpty == false else {
+            throw InputError.wrongInfoInput
+        }
+        let subjectInfo = info.split(separator: " ").map { String($0) }
+        guard subjectInfo.count == 3 else {
+            throw InputError.wrongInfoInput
+        }
+        
+        guard let creditString = subjectInfo.last,
+            Subject.changeCreditToScore(credit: creditString) != nil else {
+            throw InputError.wrongInfoInput
+        }
+        
+        return true
+    }
+    
     // for Test
     func getStudents() -> [Student] {
         return students
