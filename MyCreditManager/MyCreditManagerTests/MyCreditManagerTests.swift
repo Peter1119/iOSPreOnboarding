@@ -191,5 +191,59 @@ final class MyCreditManagerTests: XCTestCase {
     }
     
     // MARK: - 성적 추가 TEST
+    func test_이미존재하는Mike에_Mike_swift_A_성적을입력하면성적이추가됨() {
+        // given
+        let studentName = "Mike"
+        do {
+            try sut.addStudent(studentName)
+        } catch {
+            XCTFail("예상 밖의 오류 발생: \(error)")
+        }
+        let info = "Mike Swift A"
+        
+        // when
+        do {
+            try sut.addGrade(info)
+        } catch {
+            XCTFail("예상 밖의 오류 발생: \(error)")
+        }
+        
+        let result = sut.getStudents().first { $0.name == studentName }
+        
+        // then
+        XCTAssertEqual(result?.subjects.count, 1)
+        XCTAssertEqual(result?.subjects.map(\.name).contains("Swift"), true)
+    }
     
+    func test_성적이_이미존재할경우에갱신됨() {
+        // given
+        let studentName = "Mike"
+        do {
+            try sut.addStudent(studentName)
+        } catch {
+            XCTFail("예상 밖의 오류 발생: \(error)")
+        }
+        let info = "Mike Swift A"
+        
+        do {
+            try sut.addGrade(info)
+        } catch {
+            XCTFail("예상 밖의 오류 발생: \(error)")
+        }
+        
+        // when
+        let newInfo = "Mike Swift B+"
+        
+        do {
+            try sut.addGrade(newInfo)
+        } catch {
+            XCTFail("예상 밖의 오류 발생: \(error)")
+        }
+        
+        let result = sut.getStudents().first { $0.name == studentName }
+        
+        // then
+        XCTAssertEqual(result?.subjects.count, 1)
+        XCTAssertEqual(result?.subjects.first(where: { $0.name == "Swift" })?.score, 3.5)
+    }
 }
