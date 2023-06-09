@@ -132,7 +132,7 @@ final class MyCreditManagerTests: XCTestCase {
         let info = String()
         
         // when
-        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+        XCTAssertThrowsError(try sut.validateAddSubjectInfoForm(info)) { error in
             
             // then
             XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
@@ -144,7 +144,7 @@ final class MyCreditManagerTests: XCTestCase {
         let info = "Mike"
         
         // when
-        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+        XCTAssertThrowsError(try sut.validateAddSubjectInfoForm(info)) { error in
             
             // then
             XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
@@ -156,7 +156,7 @@ final class MyCreditManagerTests: XCTestCase {
         let info = "Mike Swift"
         
         // when
-        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+        XCTAssertThrowsError(try sut.validateAddSubjectInfoForm(info)) { error in
             
             // then
             XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
@@ -169,7 +169,7 @@ final class MyCreditManagerTests: XCTestCase {
         
         // when
         do {
-            let result = try sut.validateSubjectInfoForm(info)
+            let result = try sut.validateAddSubjectInfoForm(info)
             
             // then
             XCTAssertEqual(result, true)
@@ -183,7 +183,7 @@ final class MyCreditManagerTests: XCTestCase {
         let info = "Mike Swift R+"
         
         // when
-        XCTAssertThrowsError(try sut.validateSubjectInfoForm(info)) { error in
+        XCTAssertThrowsError(try sut.validateAddSubjectInfoForm(info)) { error in
             
             // then
             XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
@@ -213,6 +213,18 @@ final class MyCreditManagerTests: XCTestCase {
         // then
         XCTAssertEqual(result?.subjects.count, 1)
         XCTAssertEqual(result?.subjects.map(\.name).contains("Swift"), true)
+    }
+    
+    func test_존재하지않는학생을추가할경우입력오류를방출함() {
+        // given
+        let info = "Mike Swift A"
+        
+        // when
+        XCTAssertThrowsError(try sut.addGrade(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
     }
     
     func test_성적이_이미존재할경우에갱신됨() {
@@ -246,4 +258,6 @@ final class MyCreditManagerTests: XCTestCase {
         XCTAssertEqual(result?.subjects.count, 1)
         XCTAssertEqual(result?.subjects.first(where: { $0.name == "Swift" })?.score, 3.5)
     }
+    
+    
 }

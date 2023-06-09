@@ -41,12 +41,16 @@ class StudentCreditManager: StudentCreditManagerProtocol {
     }
     
     func addGrade(_ info: String) throws {
-        guard try validateSubjectInfoForm(info) else { return }
+        guard try validateAddSubjectInfoForm(info) else { return }
         
         guard let newInfo = getSubject(info) else { return }
         
         let studentName = newInfo.0
         let newSubject = newInfo.1
+        
+        guard students.map(\.name).contains(studentName) == true else {
+            throw InputError.wrongInfoInput
+        }
         
         if isExistingGrade(studentName, newSubject.name) == false {
             appendNewGrade(studentName: studentName, newSubject)
@@ -97,7 +101,7 @@ class StudentCreditManager: StudentCreditManagerProtocol {
 
     }
     
-    func validateSubjectInfoForm(_ info: String) throws -> Bool {
+    func validateAddSubjectInfoForm(_ info: String) throws -> Bool {
         let subjectInfo = info.split(separator: " ").map { String($0) }
         guard subjectInfo.count == 3,
               subjectInfo.isEmpty == false,
