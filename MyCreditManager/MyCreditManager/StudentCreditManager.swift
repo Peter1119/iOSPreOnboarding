@@ -43,23 +43,32 @@ class StudentCreditManager: StudentCreditManagerProtocol {
     func addGrade(_ info: String) throws {
         guard try validateSubjectInfoForm(info) else { return }
         
+        guard let newInfo = getSubject(info) else { return }
+        
+        let studentName = newInfo.0
+        let newSubject = newInfo.1
+        
+        if isExistingGrade(studentName, newSubject.name) == false {
+            appendNewGrade(studentName: studentName, newSubject)
+        } else {
+            renewGrade(studentName: studentName, newSubject)
+        }
+    }
+    
+    private func getSubject(_ info: String) -> (String, Subject)? {
         var subjectInfo = info.split(separator: " ").map { String($0) }
         let studentName = subjectInfo.removeFirst()
         let score = subjectInfo.removeLast()
         
         guard let subjectCredit = Subject.changeCreditToScore(credit: score),
-              let subjectName = subjectInfo.first else { return }
+              let subjectName = subjectInfo.first else { return nil}
         
         let newSubject = Subject(
             name: subjectName,
             score: subjectCredit
         )
         
-        if isExistingGrade(studentName, subjectName) == false {
-            appendNewGrade(studentName: studentName, newSubject)
-        } else {
-            renewGrade(studentName: studentName, newSubject)
-        }
+        return (studentName, newSubject)
     }
     
     private func isExistingGrade(_ studentName: String, _ subjectName: String) -> Bool {
@@ -85,7 +94,7 @@ class StudentCreditManager: StudentCreditManagerProtocol {
     }
     
     func getAverageCredit(_ name: String) {
-        
+
     }
     
     func validateSubjectInfoForm(_ info: String) throws -> Bool {
