@@ -258,6 +258,4 @@ final class MyCreditManagerTests: XCTestCase {
         XCTAssertEqual(result?.subjects.count, 1)
         XCTAssertEqual(result?.subjects.first(where: { $0.name == "Swift" })?.score, 3.5)
     }
-    
-    
 }
