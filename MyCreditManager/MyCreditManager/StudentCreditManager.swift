@@ -10,7 +10,7 @@ import Foundation
 protocol StudentCreditManagerProtocol {
     func addStudent(_ name: String) throws
     func removeStudent(_ name: String) throws
-    func addGrade(_ info: String)
+    func addGrade(_ info: String) throws
     func removeGrade(_ info: String)
     func getAverageCredit(_ name: String)
 }
@@ -40,8 +40,44 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         students.removeAll { $0.name == name }
     }
     
-    func addGrade(_ info: String) {
+    func addGrade(_ info: String) throws {
+        guard try validateSubjectInfoForm(info) else { return }
         
+        var subjectInfo = info.split(separator: " ").map { String($0) }
+        let studentName = subjectInfo.removeFirst()
+        let score = subjectInfo.removeLast()
+        
+        guard let subjectCredit = Subject.changeCreditToScore(credit: score),
+              let subjectName = subjectInfo.first else { return }
+        
+        let newSubject = Subject(
+            name: subjectName,
+            score: subjectCredit
+        )
+        
+        if isExistingGrade(studentName, subjectName) == false {
+            appendNewGrade(studentName: studentName, newSubject)
+        } else {
+            renewGrade(studentName: studentName, newSubject)
+        }
+    }
+    
+    private func isExistingGrade(_ studentName: String, _ subjectName: String) -> Bool {
+        return students
+            .first(where: { $0.name == studentName })?.subjects
+            .map(\.name)
+            .contains(subjectName) ?? false
+    }
+    
+    private func appendNewGrade(studentName: String, _ newSubject: Subject) {
+        students.first(where: { $0.name == studentName })?.subjects.append(newSubject)
+    }
+    
+    private func renewGrade(studentName: String, _ newSubject: Subject) {
+        guard let subjectIndex = students.first(where: { $0.name == studentName })
+            .map(\.subjects)?.firstIndex(where: { $0.name == newSubject.name }) else { return }
+        
+        students.first(where: { $0.name == studentName })?.subjects[subjectIndex] = newSubject
     }
     
     func removeGrade(_ info: String) {
