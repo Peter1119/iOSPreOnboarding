@@ -258,4 +258,51 @@ final class MyCreditManagerTests: XCTestCase {
         XCTAssertEqual(result?.subjects.count, 1)
         XCTAssertEqual(result?.subjects.first(where: { $0.name == "Swift" })?.score, 3.5)
     }
+    
+    // MARK: - 성적 제거 Test
+    // 입력값의 유효성 검사
+        // 학생명과 과목명 중 1가지만 적었을 경우
+    func test_입력값이Mike한가지일경우오류발생() {
+        // given
+        let info = "Mike"
+        // when
+        XCTAssertThrowsError(try sut.validateForRemoveGrade(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+        // 빈 스트링을 보낼 경우
+    func test_입력값이빈스트링일경우오류발생() {
+        // given
+        let info = String()
+        // when
+        XCTAssertThrowsError(try sut.validateForRemoveGrade(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+    
+    func test_입력값이3가지인경우오류발생() {
+        // given
+        let info = "Mike Swift B+"
+        // when
+        XCTAssertThrowsError(try sut.validateForRemoveGrade(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.wrongInfoInput)
+        }
+    }
+    
+    func test_존재하지않는학생일경우오류발생() {
+        // given
+        let info = "Mike Swift"
+        // when
+        XCTAssertThrowsError(try sut.validateForRemoveGrade(info)) { error in
+            
+            // then
+            XCTAssertEqual(error as? InputError, InputError.notExistingStudent(name: "Mike"))
+        }
+    }
 }
