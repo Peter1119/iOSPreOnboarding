@@ -114,6 +114,20 @@ class StudentCreditManager: StudentCreditManagerProtocol {
         return true
     }
     
+    func validateForRemoveGrade(_ info: String) throws -> Bool {
+        var information = info.split(separator: " ").map { String($0) }
+        guard information.count == 2 else {
+            throw InputError.wrongInfoInput
+        }
+        
+        let studentName = information.removeFirst()
+        guard students.map(\.name).contains(studentName) == true else {
+            throw InputError.notExistingStudent(name: studentName)
+        }
+        
+        return true
+    }
+    
     // for Test
     func getStudents() -> [Student] {
         return students
